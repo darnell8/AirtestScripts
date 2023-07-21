@@ -65,6 +65,8 @@ cinema_button = poco("com.wandafilm.app:id/recyclerView").child("android.widget.
 cinema_button.click()
 sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
 
+tomorrow_tab = poco(textMatches="明天.*").wait().swipe([-0.0188, -0.6663])
+
 # 打印时间
 date_text_list = poco("com.wandafilm.app:id/opening_time").wait()
 for index in range(len(date_text_list)):
