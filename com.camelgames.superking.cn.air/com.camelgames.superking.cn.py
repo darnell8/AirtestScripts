@@ -71,6 +71,11 @@ SHOUJIZIYUAN_SLEEP_MAX_SEC = 2
 GLOBAL_SLEEP_MIN_SEC = 2
 GLOBAL_SLEEP_MAX_SEC = 3
 
+# ----------------------------------------X.Unity游戏？----------------------------------------
+
+# from poco.drivers.unity3d import UnityPoco
+# poco = UnityPoco()
+
 # ----------------------------------------X.通用方法----------------------------------------
 # 返回游戏首页
 def back_to_home():
@@ -251,6 +256,11 @@ mission_continue_button2 = Template(r"前往任务2.png", record_pos=(0.306, -0.
 mission_skip_button = Template(r"对话跳过按钮.png", record_pos=(0.396, -0.837), resolution=(540, 960))
 mission_point_to_button = Template(r"任务指引.png", record_pos=(0.017, 0.219), resolution=(540, 960))
 mission_complete_button = Template(r"领取任务奖励.png", record_pos=(0.306, -0.17), resolution=(540, 960))
+mission_reward_tips = Template(r"章节奖励.png", rgb=True, record_pos=(-0.004, 0.414), resolution=(720, 1280))
+mission_reward_tips2 = Template(r"任务奖励2.png", record_pos=(0.0, -0.214), resolution=(720, 1280))
+build_button = Template(r"建造按钮.png", record_pos=(0.297, 0.797), resolution=(720, 1280))
+chapter_rewards_button = Template(r"领取章节奖励.png", rgb=True, record_pos=(0.0, 0.696), resolution=(720, 1280))
+open_button = Template(r"开启按钮.png", record_pos=(-0.003, 0.232), resolution=(720, 1280))
 
 def complete_missions():
     back_to_home()
@@ -287,9 +297,114 @@ def complete_missions():
         keyevent("BACK")
 
         sleep(random.uniform(5, 6))
-                    
-complete_missions()
+        
+        
+go_or_reward_whatever_pixel = (579, 517)
+mission_point_to_pixel = (360, 573)
+build_pixel = (571, 1213)
+chapter_rewards_pixel = (359, 1135)
+mission_skip_pixel = (643, 32)
+open_pixel = (358, 806)
 
+def complete_missions_by_pixel():
+    back_to_home()
+    
+    # 点击任务开始按钮
+    touch((random.randint(10, 40), random.randint(920, 980)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    # 已经进入指引任务面板
+    if exists(chapter_rewards_button):
+        touch(generate_random_tuple(chapter_rewards_pixel))
+        return
+    
+    # 前往或者领取任务，whatever
+    touch(generate_random_tuple(go_or_reward_whatever_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+    if exists(mission_reward_tips2):
+        # 领取奖励
+        touch(generate_random_tuple(go_or_reward_whatever_pixel))
+        return
+    else:
+        # 执行任务
+        touch(generate_random_tuple(mission_point_to_pixel))
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+        if exists(mission_skip_button):
+            touch(generate_random_tuple(mission_skip_pixel))
+            sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+         # 升级建筑或者研究
+        while exists(mission_point_to_button):
+            touch(mission_point_to_button)
+        
+        # 建筑任务
+        if exists(build_button):
+            touch(generate_random_tuple(build_pixel))
+            return
+        
+        # 开启新的土地
+        if exists(open_button):
+            touch(generate_random_tuple(open_pixel))
+            return
+       
+# complete_missions_by_pixel()
+
+# ----------------------------------------X.升级建筑----------------------------------------
+speed_button = Template(r"加速按钮.png", record_pos=(-0.253, 0.165), resolution=(720, 1280))
+speeed_button2 = Template(r"宝石加速按钮.png", record_pos=(-0.379, 0.132), resolution=(720, 1280))
+level_up_button = Template(r"升级按钮.png", record_pos=(-0.378, -0.013), resolution=(720, 1280))
+jump_to_somwhere_button = Template(r"跳转按钮.png", record_pos=(0.369, 0.244), resolution=(720, 1280))
+level_up_confirm_button = Template(r"建筑升级按钮.png", record_pos=(0.231, 0.79), resolution=(720, 1280))
+immediately_complete_button = Template(r"立即完成按钮.png", record_pos=(-0.001, -0.189), resolution=(720, 1280))
+
+level_up_pixel = (84, 637)
+castle_pixel = (15, 259)
+jump_to_somwhere_pixel = (630, 814)
+level_up_comfirm_pixel = (530, 1214)
+switch_world_pixel = (75, 1215)
+immediately_complete_pixel = (358, 497)
+def upgrade_castle_by_pixel():
+    back_to_home()
+    
+    touch(generate_random_tuple(switch_world_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    touch(generate_random_tuple(switch_world_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+    # 点击主城按钮
+    touch((random.randint(0, 15), random.randint(245, 265)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    if not exists(level_up_button):
+        log("城堡还在升级中...")
+        return
+    
+    touch(generate_random_tuple(level_up_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    # 如果存在不满足的建筑等级要求则跳转
+    if exists(jump_to_somwhere_button):
+        touch(jump_to_somwhere_button)
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+        if exists(level_up_confirm_button):
+            touch(generate_random_tuple(level_up_comfirm_pixel))
+            sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+            
+        if exists(immediately_complete_button):
+            touch(generate_random_tuple(immediately_complete_pixel))
+            sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+            
+        return
+        
+    touch(generate_random_tuple(level_up_comfirm_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+while(True):
+    upgrade_castle_by_pixel()
 # ----------------------------------------X.每日奖励----------------------------------------
 daily_reward_button = Template(r"领取奖励.png", record_pos=(0.0, 0.428), resolution=(540, 960))
 def close_daily_rewards():
