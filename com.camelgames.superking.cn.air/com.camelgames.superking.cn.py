@@ -285,8 +285,11 @@ def scout_enemy_castle(x, y):
     sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
 
     # 点击攻击按钮
-    touch(generate_random_tuple(attack_castle_pixel))
-    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    if exists(attack_castle_button):
+        touch(generate_random_tuple(attack_castle_pixel))
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    else:
+        return False
     
     if exists(attack_button):
         return True
@@ -541,18 +544,4 @@ if __name__ == "__main__":
             send_email_by_pixel('Lord84682444', '(525, 605)已经打开通道')
         
         sleep(600)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
