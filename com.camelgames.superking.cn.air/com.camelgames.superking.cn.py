@@ -249,6 +249,51 @@ def goto_outtown(target_name, level):
 # goto_outtown("农庄", 2)
 # goto_outtown_by_pixel("农庄", 2)
 
+# ----------------------------------------X.检测防护罩----------------------------------------
+attack_castle_button = Template(r"攻击城堡按钮.png", record_pos=(0.22, -0.302), resolution=(540, 960))
+attack_castle_pixel = (388, 311)
+
+go_to_button_pixel = (271, 571)
+def scout_enemy_castle(x, y):
+    back_to_home()
+
+    touch(generate_random_tuple(outtown_confirm_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+    # 进入坐标输入界面按钮
+    touch((random.randint(189, 371), random.randint(810, 822)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+    # 输入X轴
+    touch((random.randint(113, 245), random.randint(442, 466)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    text(x)
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    touch((random.randint(113, 245), random.randint(442, 466)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+    # 输入Y轴
+    touch((random.randint(337, 447), random.randint(442, 466)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    text(y)
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    touch((random.randint(337, 447), random.randint(442, 466)))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    # 前往按钮
+    touch(generate_random_tuple(go_to_button_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+    # 点击攻击按钮
+    touch(generate_random_tuple(attack_castle_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    if exists(attack_button):
+        return True
+    else:
+        return False
+    
+
 # ----------------------------------------X.自动完成任务----------------------------------------
 mission_enter_button = Template(r"任务入口.png", record_pos=(-0.43, 0.426), resolution=(540, 960))
 mission_continue_button = Template(r"前往任务.png", record_pos=(0.307, -0.172), resolution=(540, 960))
@@ -359,11 +404,11 @@ jump_to_somwhere_button = Template(r"跳转按钮.png", record_pos=(0.369, 0.244
 level_up_confirm_button = Template(r"建筑升级按钮.png", record_pos=(0.231, 0.79), resolution=(720, 1280))
 immediately_complete_button = Template(r"立即完成按钮.png", record_pos=(-0.001, -0.189), resolution=(720, 1280))
 
-level_up_pixel = (84, 637)
-castle_pixel = (15, 259)
-jump_to_somwhere_pixel = (630, 814)
-level_up_comfirm_pixel = (530, 1214)
-switch_world_pixel = (75, 1215)
+level_up_pixel = (63, 478)
+castle_pixel = (15, 190)
+jump_to_somwhere_pixel = (472, 611)
+level_up_comfirm_pixel = (398, 910)
+switch_world_pixel = (57, 918)
 immediately_complete_pixel = (358, 497)
 def upgrade_castle_by_pixel():
     back_to_home()
@@ -375,7 +420,7 @@ def upgrade_castle_by_pixel():
     sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
         
     # 点击主城按钮
-    touch((random.randint(0, 15), random.randint(245, 265)))
+    touch((random.randint(0, 15), random.randint(185, 200)))
     sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
     
     if not exists(level_up_button):
@@ -403,8 +448,6 @@ def upgrade_castle_by_pixel():
     touch(generate_random_tuple(level_up_comfirm_pixel))
     sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
 
-while(True):
-    upgrade_castle_by_pixel()
 # ----------------------------------------X.每日奖励----------------------------------------
 daily_reward_button = Template(r"领取奖励.png", record_pos=(0.0, 0.428), resolution=(540, 960))
 def close_daily_rewards():
@@ -430,4 +473,86 @@ dialog_close_button2 = Template(r"关闭按钮2.png", record_pos=(0.426, -0.587)
 def close_supreme_monthly_card():
     if exists(monthly_card):
         touch(dialog_close_button2)
+        
+# ----------------------------------------X.发送邮件----------------------------------------
+avatar_button = Template(r"头像.png", record_pos=(-0.413, -0.806), resolution=(540, 960))
+search_user_button = Template(r"查找用户按钮.png", record_pos=(0.1, 0.244), resolution=(540, 960))
+search_text_button = Template(r"查找用户输入框.png", record_pos=(-0.011, -0.596), resolution=(540, 960))
+send_email_button = Template(r"发送邮件按钮.png", record_pos=(0.287, 0.781), resolution=(540, 960))
+
+
+avatar_pixel = (49, 41)
+search_user_pixel = (326, 600)
+search_text_pixel = (271, 158)
+search_text_confirm_pixel = (471, 152)
+send_email_pixel = (426, 901)
+first_user_by_search_pixel = (58, 265)
+write_email_text_pixel = (183, 920)
+
+def send_email_by_pixel(user_name, email_content):
+    back_to_home()
+
+    touch(generate_random_tuple(avatar_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    touch(generate_random_tuple(search_user_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    touch(generate_random_tuple(search_text_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    text(user_name)
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    touch(generate_random_tuple(search_text_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    touch(generate_random_tuple(search_text_confirm_pixel))
+    sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    
+    if exists(avatar_button):
+        touch(generate_random_tuple(first_user_by_search_pixel))
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+        touch(generate_random_tuple(send_email_pixel))
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+        touch(generate_random_tuple(write_email_text_pixel))
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+
+        text(email_content)
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+        
+        touch(generate_random_tuple(first_user_by_search_pixel))
+        sleep(random.uniform(GLOBAL_SLEEP_MIN_SEC, GLOBAL_SLEEP_MAX_SEC))
+    else:
+        return False
+        
+
+# 运行主方法
+if __name__ == "__main__":
+    while(True):
+        # upgrade_castle_by_pixel()
+        # goto_outtown_by_pixel("农庄", 1)
+#         send_email_by_pixel('Lord84682444', '已经打开')
+        can_attack = scout_enemy_castle('525', '605')
+        log('是否可以被进攻：' + str(can_attack))
+        
+        if not can_attack:
+            send_email_by_pixel('Lord84682444', '(525, 605)已经打开通道')
+        
+        sleep(600)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
